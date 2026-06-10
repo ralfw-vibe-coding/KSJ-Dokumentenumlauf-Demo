@@ -338,14 +338,14 @@ function Login({ onLogin, error, loading }: { onLogin: (event: FormEvent<HTMLFor
         </label>
         <label>
           Passwort
-          <VisiblePasswordInput name="password" autoComplete="current-password" />
+          <input name="password" type="password" autoComplete="current-password" />
         </label>
         {error ? <p className="error">{error}</p> : null}
         <button className="primary-button" type="submit" disabled={loading}>
           <Check size={18} />
           {loading ? 'Anmeldung läuft' : 'Anmelden'}
         </button>
-        <p className="hint">Initialer Admin-Zugang: admin / admin</p>
+        <p className="hint">Bitte mit dem zugewiesenen Benutzerkonto anmelden.</p>
       </form>
     </main>
   )
