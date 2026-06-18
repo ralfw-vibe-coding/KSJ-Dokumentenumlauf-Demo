@@ -112,7 +112,17 @@ export default async (request: Request) => {
 }
 
 export const config = {
-  path: '/api/*',
+  path: [
+    '/api/health',
+    '/api/login',
+    '/api/session',
+    '/api/users',
+    '/api/users/:id',
+    '/api/users/:id/password',
+    '/api/circulations',
+    '/api/circulations/changed',
+    '/api/circulations/:id/vote',
+  ],
 }
 
 async function handleLogin(request: Request) {

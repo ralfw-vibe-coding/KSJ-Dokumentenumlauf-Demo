@@ -83,7 +83,7 @@ async function api<T>(path: string, options?: RequestInit): Promise<T> {
   })
   if (!response.ok) {
     const body = (await response.json().catch(() => ({}))) as { message?: string }
-    throw new Error(body.message ?? 'Die Anfrage ist fehlgeschlagen.')
+    throw new Error(body.message ?? `Die Anfrage ist fehlgeschlagen (${response.status} ${path}).`)
   }
   return response.json() as Promise<T>
 }
@@ -203,8 +203,12 @@ function App() {
 
   async function changePassword(userId: string, password: string) {
     if (!password.trim()) return
-    setUsers(await api<User[]>(`/api/users/${userId}/password`, { method: 'PATCH', body: JSON.stringify({ password }) }))
-    setNotice('Passwort wurde geändert.')
+    try {
+      setUsers(await api<User[]>(`/api/users/${userId}/password`, { method: 'PATCH', body: JSON.stringify({ password }) }))
+      setNotice('Passwort wurde geändert.')
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'Passwort konnte nicht geändert werden.')
+    }
   }
 
   async function deactivateUser(userId: string) {
